@@ -29,12 +29,11 @@ def generate_mcqs(role, skills, exp, num_qs=5):
     ...
     """
     response = client.messages.create(
-        model="claude-4-sonnet-20250514",
+        model="claude-sonnet-5",
         max_tokens=1200,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
+        messages=[{"role": "user", "content": prompt}]
     )
-    return response.content[0].text
+    return next(block.text for block in response.content if block.type == "text")
 
 def get_feedback(role, skills, exp, results):
     prompt = f"""
@@ -54,12 +53,11 @@ def get_feedback(role, skills, exp, results):
     4. Suggestions for improvement
     """
     response = client.messages.create(
-        model="claude-4-sonnet-20250514",
+        model="claude-sonnet-5",
         max_tokens=800,
-        messages=[{"role": "user", "content": prompt}],
-        temperature=0.6,
+        messages=[{"role": "user", "content": prompt}]
     )
-    return response.content[0].text
+    return next(block.text for block in response.content if block.type == "text")
 
 # === Streamlit UI ===
 st.title("🎯 AI Interview Practice")
