@@ -60,6 +60,7 @@ def get_feedback(role, skills, exp, results):
     return next(block.text for block in response.content if block.type == "text")
 
 # === Streamlit UI ===
+st.set_page_config(page_title="AI Interview Practice", page_icon="🎯")
 st.title("🎯 AI Interview Practice")
 st.write("Practice multiple-choice interview questions tailored to your skills")
 
